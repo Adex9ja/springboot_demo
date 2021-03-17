@@ -28,4 +28,10 @@ public class UserService {
         user.setId(id);
         return userRepositories.save(user);
     }
+
+    public void deleteUserById(Long id) {
+        if(userRepositories.findById(id).isPresent()){
+            userRepositories.deleteById(id);
+        }
+    }
 }
