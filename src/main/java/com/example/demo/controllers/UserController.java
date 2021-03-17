@@ -34,9 +34,13 @@ public class UserController {
         return userService.updateUserById(id, user);
     }
 
-    @DeleteMapping("users/{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable("id") Long id){
          userService.deleteUserById(id);
     }
 
+    @GetMapping("/users/byusername/{username}")
+    public User getUserByUsername(@PathVariable("username") String username){
+        return userService.findUserByUsername(username);
+    }
 }
