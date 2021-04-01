@@ -5,9 +5,12 @@ import com.example.demo.exceptions.UserExistsException;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +27,12 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User createUser(@RequestBody User user){
+    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder builder){
        try {
-           return userService.createUser(user);
+            userService.createUser(user);
+           HttpHeaders httpHeaders = new HttpHeaders();
+           httpHeaders.setLocation(builder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
+           return new ResponseEntity<Void>(httpHeaders, HttpStatus.CREATED);
        }catch (UserExistsException e){
            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
        }
