@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -11,7 +12,7 @@ public class User {
 
     @Column(name = "user_name", length = 50, nullable = false, unique = true)
     private String username;
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstname;
     @Column(name = "last_name")
     private String lastname;
@@ -19,6 +20,9 @@ public class User {
     private String role;
     @Column(name = "SSN", nullable = false, unique = true, length = 50)
     private String ssn;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public User() {
     }
@@ -100,5 +104,13 @@ public class User {
                 ", role='" + role + '\'' +
                 ", ssn='" + ssn + '\'' +
                 '}';
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
