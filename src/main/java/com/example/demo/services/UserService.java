@@ -3,7 +3,7 @@ package com.example.demo.services;
 import com.example.demo.entities.User;
 import com.example.demo.exceptions.UserExistsException;
 import com.example.demo.exceptions.UserNotFoundException;
-import com.example.demo.repositories.UserRepositories;
+import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    private UserRepositories userRepositories;
+    private UserRepository userRepositories;
 
     public List<User> getAllUser(){
         return userRepositories.findAll();
